@@ -1,5 +1,5 @@
 # Korvfest website
-The korvfest website order
+The korvfest order
 
 This is actually just a javascript experiment to write a (weekly) rotating schedule of names.
 
