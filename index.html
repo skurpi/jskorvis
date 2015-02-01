@@ -1,0 +1,100 @@
+<doctype html>
+<html>
+	<head>
+		<style>
+			body {
+				background-color: rgb(188, 182, 150);
+				color: rgb(55, 55, 55);
+			}
+			#names {
+				width: 100%;
+				height: 30%;
+				display: table;
+			}
+			#names ul {
+				list-style: none;
+				font-size: 1.3rem;
+			}
+			.center {
+				text-align: center;
+				display: table-cell;
+				vertical-align: middle;
+			}
+			#thekorv {
+				width: 100%;
+				height: 70%;
+				display: table;
+			}
+			#name {
+				font-size: 7rem;
+				color: rgb(148, 41, 41);
+			}
+			.bold {
+				font-weight: bold;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="thekorv">
+			<h1 id="name" class="center"></h1>
+		</div>
+		<div id="names" class="center">
+			<ul id="nameList"></ul>
+		</div>
+		<script type="text/javascript">
+			// Data
+			var startFrom = 'Dan';
+			var names = [
+				'Daniel',
+				'Dario',
+				'Dan',
+				'Adam',
+			];
+			var titles = [
+				'A korvfest a week keeps the doctor away',
+				'Sausagefest',
+				'The order of the Korvfest',
+				'The order of the Korv',
+			];
+
+			// Functions
+			Array.prototype.getRandom = function () {
+				return this[Math.floor(Math.random() * this.length)];
+			};
+			Date.prototype.getWeekNumber = function () {
+				var d = new Date(+this);
+				d.setHours(0, 0, 0);
+				d.setDate(d.getDate() + 4 - (d.getDay() || 7));
+				return Math.ceil((((d - new Date(d.getFullYear(), 0, 1)) / 8.64e7) + 1) / 7);
+			};
+			var getKorvare = function (list) {
+				var week = new Date().getWeekNumber();
+week+=1;
+				var offset;
+				list.forEach(function (obj, index) {
+					if (obj === startFrom) {
+						offset = index;
+					}
+				});
+				return list[(week + offset) % list.length];
+			};
+			var getNamesContent = function (korvare) {
+				var list = document.getElementById('nameList');
+				names.forEach(function (name, index) {
+					var element = document.createElement('li');
+					element.innerText = name;
+					if (name === korvare) {
+						element.className = 'bold';
+					}
+					list.appendChild(element);
+				});
+			};
+
+			// Do stuff
+			document.title = titles.getRandom();
+			var korvare = getKorvare(names);
+			getNamesContent(korvare);
+			document.getElementById('name').innerText = korvare;
+		</script>
+	</body>
+</html>
